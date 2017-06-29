@@ -1,0 +1,186 @@
+@import "compass/css3";
+
+
+.grow, .fade, .spin {
+  backface-visibility: none;
+  perspective: 1000;
+  transform: translate3d(0,0,0);
+  
+  &:before {
+    animation-duration: 1s; 
+    animation-iteration-count: 2; 
+    animation-timing-function: ease-in-out;
+  }
+}
+
+.grow:hover:before {
+  animation-name: grow; 
+}
+
+.fade:hover:before {
+  animation-name: fade; 
+}
+
+.spin:hover:before {
+  animation-name: spin; 
+}
+
+.status {
+  $size: 18px;
+  display: inline-block;
+  margin: 2px;
+  width: $size;
+  height: $size;
+  border-radius: $size/2;
+  border: 2px solid transparent;
+  box-sizing: border-box;
+  position: relative;
+  cursor: pointer;
+
+  &:before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+  
+  &.passed {
+    $color: #a3aebb;
+    border-color: $color;
+    
+    &:before {
+      $size: 6px;
+      content: '';
+      border-bottom: 2px solid $color;
+      width: $size;
+      margin-left: -$size/2;
+      margin-top: -1px;
+      display: block;
+    }
+  }
+  
+  &.pending {
+    $color: #747f8d;
+    border-color: $color;    
+
+    &:before {
+      $size: 6px;
+      $thickness: 2px;
+      content: '';
+      display: block;
+      height: $size;
+      width: 2px;
+      margin-top: -$size/2;
+      margin-left: -$size/2;
+      border-right: $thickness solid $color;
+      border-left: $thickness solid $color;
+    }
+  }
+  
+  &.active {
+    $color: #3cb87e;//#43B581;
+    border-color: $color;
+    
+    &:before {
+      content: '';
+      border-width: 3px;
+      border-color: transparent;
+      border-style: solid;
+      margin-top: -3px;
+      margin-left: -2px;
+      border-left: 5px solid $color;
+    }    
+  }
+  
+  &.offered {
+    $color: #ed9f03;
+    border-color: $color;
+    border-width: 2px;
+    
+    &:before {
+      content: '';
+      $size: 10px;
+      margin-left: -$size/2;
+      margin-top: -$size/2;
+      width: $size;
+      height: $size;
+      background: $color;
+      border-radius: $size/2;
+    }
+  }
+  
+  &.lost {
+    $color: #f04848;
+    border-color: $color;
+    font-family: arial, sans-serif;
+    
+    &:before {
+      line-height: 100%;
+      font-size: 14px;
+      height: 100%;
+      width: 100%;
+      margin-top: -50%;
+      margin-left: -50%;
+      content: '×';
+      font-weight: bold;
+      color: $color;
+    }
+  }
+  
+  &.complete {
+    $color: #3cb87e;//#43B581;
+    border-color: $color;
+    
+    &:before {
+      $size: 16px;
+      content: '✓';
+      color: white;
+      display: block;
+      width: $size;
+      height: $size;
+      margin-top: -$size/2;
+      margin-left: -$size/2;
+      text-indent: 1px;
+      background: $color;
+      font-weight: bold;
+      line-height: 12px;
+      text-shadow: 
+        2px 0px 1px $color, 
+        -2px 0px 1px $color,
+        0 -2px 1px $color,
+        0 2px 1px $color;
+      border-radius: $size/2;
+    }   
+  }
+  
+  &.waiting {
+    $color: #bbb;
+    border-color: $color;
+    
+    &:before {
+      width: 3px;
+      height: 4px;
+      top: 2px;
+      margin-left: -1px;
+      content: '';
+      border-left: 2px solid $color;
+      border-bottom: 2px solid $color;
+    }
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fade {
+  0% { opacity: 1; }
+  50% { opacity: 0.1; }
+  100% { opacity: 1; }
+}
+
+@keyframes grow {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.75); }
+  100% { transform: scale(1); }
+}
